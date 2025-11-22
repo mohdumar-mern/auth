@@ -1,4 +1,4 @@
-import { register } from "../services/authServices.js";
+import { login, register } from "../services/authServices.js";
 import asyncHandler from "express-async-handler";
 
 
@@ -16,4 +16,11 @@ export const registerController = asyncHandler(async(req, res) =>{
     const {user, refreshToken, accessToken} = await register({ email, password });
     res.cookie('refreshToken', refreshToken, COOKIE_OPTIONS);
     res.status(201).json({ user, accessToken });
+})
+
+export const loginController = asyncHandler(async(req, res) =>{
+    const { email, password } = req.body;
+    const {user, refreshToken, accessToken} = await login({ email, password });
+    res.cookie('refreshToken', refreshToken, COOKIE_OPTIONS);
+    res.status(200).json({ user, accessToken });
 })

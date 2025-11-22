@@ -15,4 +15,21 @@ const register= async ({email, password}) => {
 
 }
 
-export { register };
+const login= async ({email, password}) =>{
+    const user = await User.findOne({email}).select("+password")
+    if(!user){
+        throw new Error("User not found");
+    }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if(!isPasswordValid){
+        throw new Error("Invalid credentials");
+    }
+    const accessToken = generateAccessToken(user._id);
+    const refreshToken = generateRefreshToken(user._id);
+    user.refreshTokenHash = generateHashToken(refreshToken);
+    await user.save();
+    return { accessToken, refreshToken, accessToken };
+
+}
+
+export { register, login };
