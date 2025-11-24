@@ -1,9 +1,12 @@
 import cors from "cors";
+import dotenv from "dotenv";
+dotenv.config();
 
 const allowedOrigins = [
-  process.env.CLIENT_URL,
+  process.env.CLIENT_URL || 'http://localhost:3000',
   process.env.CLIENT_URL_PROD,
 ];
+
 
 export const corsOptions = cors({
   origin: (origin, callback) => {
@@ -11,6 +14,8 @@ export const corsOptions = cors({
     if (!origin) return callback(null, true);
 
     if (allowedOrigins.includes(origin)) {
+console.log("Allowed Origins:", allowedOrigins);
+
       callback(null, true);
     } else {
       callback(new Error("CORS blocked: Unauthorized origin"));
