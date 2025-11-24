@@ -4,12 +4,10 @@ import cors from 'cors';
 
 import authRoutes from './routes/authRoutes.js';
 import protectRoutes from './middleware/authMiddleware.js';
+import { corsOptions } from './utils/corsOptions.js';
 
 export const app = express()
-app.use(cors({
-    origin: 'http://localhost:3000',
-    credentials: true,
-}));
+app.use(corsOptions);
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
