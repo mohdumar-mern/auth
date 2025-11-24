@@ -2,28 +2,30 @@
 import { useState } from 'react';
 import Input from '../../components/ui/Input';
 import Button from '../../components/ui/Button';
-// import { useLoginMutation } from '../../features/auth/authApi';
-// import { useDispatch } from 'react-redux';
-// import { setCredentials } from '../../features/auth/authSlice';
-// import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/navigation';
+import { useLoginMutation } from '@/features/auth/authApi';
+import { setCredentials } from '@/features/auth/authSlice';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-//   const [login, { isLoading }] = useLoginMutation();
-//   const dispatch = useDispatch();
-//   const router = useRouter();
+  const [login, { isLoading }] = useLoginMutation();
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const onSubmit = async (e) => {
     e.preventDefault();
-//     try {
-//       const res = await login({ email, password }).unwrap();
-//       // response expected: { accessToken, user }
-//       dispatch(setCredentials({ accessToken: res.accessToken, user: res.user }));
-//       router.push('/profile');
-//     } catch (err) {
-//       alert(err?.data?.message || 'Login failed');
-//     }
+    try {
+      console.log(email, password)
+      const res = await login({ email, password }).unwrap();
+      console.log("res", res)
+      // response expected: { accessToken, user }
+      dispatch(setCredentials({ accessToken: res.accessToken, user: res.user }));
+      router.push('/profile');
+    } catch (err) {
+      alert(err?.data?.message || 'Login failed');
+    }
   };
 
   return (
@@ -32,8 +34,7 @@ export default function LoginPage() {
       <form onSubmit={onSubmit} className="space-y-4">
         <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
         <Input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password" />
-        <Button type="submit">Login</Button>
-        {/* <Button type="submit">{isLoading ? 'Logging...' : 'Login'}</Button> */}
+        <Button type="submit">{isLoading ? 'Logging...' : 'Login'}</Button>
       </form>
     </div>
   );

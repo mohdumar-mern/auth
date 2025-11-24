@@ -28,9 +28,9 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 method: 'Post',
             }),
         }),
-        profile: builder.query({
+        getProfile: builder.query({
             query: () => ({
-                url: '/auth/profile',
+                url: '/profile',
                 method: 'GET',
             }),
         }),
@@ -43,5 +43,5 @@ export const {
     useRegisterMutation,
     useLogoutMutation,
     useRefreshMutation,
-    useProfileQuery,
+    useGetProfileQuery,
 } = authApiSlice;

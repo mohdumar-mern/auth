@@ -3,22 +3,25 @@ import { useState } from 'react';
 import Input from '../../components/ui/Input';
 import Button from '../../components/ui/Button';
 import { useRegisterMutation } from '@/features/auth/authApi';
-// import { useDispatch } from 'react-redux';
-// import { setCredentials } from '../../features/auth/authSlice';
+import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
+import { setCredentials } from '@/features/auth/authSlice';
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [register, { isLoading }] = useRegisterMutation();
-//   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const router = useRouter();
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    console.log(email, password)
     try {
       const res = await register({ email, password }).unwrap();
-    //   dispatch(setCredentials({ accessToken: res.accessToken, user: res.user }));
+      
+      console.log(res)
+      dispatch(setCredentials({ accessToken: res.accessToken, user: res.user }));
       router.push('/profile');
     } catch (err) {
       alert(err?.data?.message || 'Register failed');
