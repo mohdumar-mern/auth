@@ -21,6 +21,7 @@ export const registerController = asyncHandler(async (req, res) => {
 
 export const loginController = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
+  console.log(email, password)
   const { user, refreshToken, accessToken } = await login({ email, password });
   res.cookie('refreshToken', refreshToken, COOKIE_OPTIONS);
   res.status(200).json({ user, accessToken });
