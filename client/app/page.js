@@ -1,7 +1,9 @@
-import Image from "next/image";
 
 export default function Home() {
   return (
-    <h1 className="text-2xl text-center"> Home page </h1>
+    <div className="text-center py-20">
+      <h1 className="text-4xl font-bold mb-4">RTK Query + Refresh Token Demo</h1>
+      <p className="text-slate-400">Secure authentication flow with httpOnly refresh cookies and automatic token rotation.</p>
+    </div>
   );
 }
